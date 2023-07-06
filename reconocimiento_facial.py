@@ -29,6 +29,12 @@ cv2.rectangle(foto_prueba,
               (0, 255, 0),
               2)
 
+# Realizar comparacion
+resultado = fr.compare_faces([cara_codificada_A], cara_codificada_B)
+
+print(resultado)
+
+
 # Mostrar imagenes
 cv2.imshow('Foto Control', foto_control)
 cv2.imshow('Foto Prueba', foto_prueba)
