@@ -66,4 +66,17 @@ else:
             print("No coincide con ninguno de nuestros empleados")
 
         else:
-            print("Persona autorizada")
+
+            # Buscar el nombre del empleado encontrado
+            nombre = nombres_empleados[indice_coincidencia]
+
+            y1, x2, y2, x1 = caraubic
+            cv2.rectangle(imagen, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.rectangle(imagen, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+            cv2.putText(imagen, nombre, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
+
+            # Mostrar la imagen obtenida
+            cv2.imshow('Imagen web', imagen)
+
+            # Mantener ventana abierta
+            cv2.waitKey(0)
