@@ -1,6 +1,7 @@
 import cv2
 import face_recognition as fr
 import os
+import numpy
 
 # crear base de datos
 ruta = 'Empleados'
@@ -35,4 +36,34 @@ def codificar(imagenes):
     return lista_codificada
 
 lista_empleados_codificada = codificar(mis_imagenes)
-print(len(lista_empleados_codificada))
+
+# Tomar una imagen de camara web
+captura = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
+# Leer imagen de la camara
+exito, imagen = captura.read()
+
+if not exito:
+    print("No se ha podido tomar la captura")
+else:
+    # Reconocer cara en captura
+    cara_captura = fr.face_locations(imagen)
+
+    # Codificar cara capturada
+    cara_captura_codificada = fr.face_encodings(imagen, cara_captura)
+
+    # Buscar coincidencias
+    for caracodif, caraubic in zip(cara_captura_codificada, cara_captura):
+        coincidencias = fr.compare_faces(lista_empleados_codificada, caracodif)
+        distancias = fr.face_distance(lista_empleados_codificada, caracodif)
+
+        print(distancias)
+
+        indice_coincidencia = numpy.argmin(distancias)
+
+        # Mostrar coincidencias si las hay
+        if distancias[indice_coincidencia] > 0.6:
+            print("No coincide con ninguno de nuestros empleados")
+
+        else:
+            print("Persona autorizada")
